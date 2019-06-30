@@ -33,7 +33,6 @@ services:
       - ./../yapay_backend/yapay-database:/backups
     ports:
       - 5432:5432
- 
   ecommerce:
     build: ./../dummy_ecommerce
     image: ecommerce
@@ -45,3 +44,4 @@ services:
 networks:
   backbone:
     driver: bridge
+
