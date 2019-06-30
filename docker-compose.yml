@@ -33,10 +33,19 @@ services:
       - ./../yapay_backend/yapay-database:/backups
     ports:
       - 5432:5432
+  
   ecommerce:
     build: ./../dummy_ecommerce
     image: ecommerce
     container_name: ecommerce
+    working_dir: /app
+    ports:
+      - 3002:5000
+  
+  yape_handler:
+    build: ./../dummy_yape_handler
+    image: yaoe_handler
+    container_name: yape_handler
     working_dir: /app
     ports:
       - 3003:5000
