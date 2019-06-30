@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./../yapay_frontend
+    image: yapay_frontend
+    container_name: yapay_frontend
+    working_dir: /app
+    ports:
+      - 3000:80
+
+  backend:
+    depends_on: 
+      - database
+    networks:
+      - backbone
+    build: ./../yapay_backend/yapay-spring-boot
+    image: yapay_backend
+    container_name: yapay_backend
+    ports:
+      - 3001:8080
+
+  database:
+    image: postgres
+    container_name: yapay_db
+    networks:
+      - backbone
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespass
+      - POSTGRES_DB=yapay
+    volumes:
+      - ./../yapay_backend/yapay-database:/backups
+    ports:
+      - 5432:5432
+ 
+  ecommerce:
+    build: ./../dummy_ecommerce
+    image: ecommerce
+    container_name: ecommerce
+    working_dir: /app
+    ports:
+      - 3003:5000
+  
+networks:
+  backbone:
+    driver: bridge
