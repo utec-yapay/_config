@@ -9,7 +9,9 @@ To run the infrastructure...
 4. `sudo docker-compose up` to start the services.
 
 ## Troubleshooting
-```Step 2/3 : COPY target/*.jar app.jar
-ERROR: Service 'backend' failed to build: COPY failed: no source files were specified```
+```console
+Step 2/3 : COPY target/*.jar app.jar
+ERROR: Service 'backend' failed to build: COPY failed: no source files were specified
+```
 
 jar files missing. Go to step 2
