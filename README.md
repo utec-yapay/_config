@@ -13,5 +13,21 @@ To run the infrastructure...
 Step 2/3 : COPY target/*.jar app.jar
 ERROR: Service 'backend' failed to build: COPY failed: no source files were specified
 ```
+**Solution:** jar files missing. Go to step 2
 
-jar files missing. Go to step 2
+```console
+ERROR: for database  Cannot start service database: driver failed programming external connectivity on endpoint yapay_db (e6499a4caacf3fb9100ce578aa829f1df3401beca76fd04299dc46f8d4c05712): Error starting userland proxy: Bind for 0.0.0.0:5432 failed: port is already allocated
+ERROR: Encountered errors while bringing up the project.
+```
+**Solution:** There's a process running on port 5432 (probably postgres) on your host.
+Find information about the process in port 5432
+```bash
+ps -p $(sudo lsof -t -i tcp:5432) # MacOS
+ps -p $(sudo lsof -t -i :5423 -s tcp:LISTEN) # Ubuntu
+```
+If it's indeed postgres, stop the database.
+```
+# MacOS
+sudo su postgres
+pg_ctl -D $DATADIRECTORY stop # $DATADIRECTORY could be `/Library/PostgreSQL/10/data`
+```
